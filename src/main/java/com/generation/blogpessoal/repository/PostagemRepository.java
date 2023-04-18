@@ -4,15 +4,16 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import com.generation.blogpessoal.model.Postagem;
 
-@Repository
 public interface PostagemRepository extends JpaRepository<Postagem, Long>{
-
-	List<Postagem> findAllByTituloContainingIgnoreCase(@Param("titulo") String titulo);
 	
+	//Metodo de consulta
+	
+//associa a model com a interface /  metodo de consulta /@Param mapear o parametro
+	List<Postagem> findAllByTituloContainingIgnoreCase(@Param("titulo") String titulo);
+	//vai listar todas a postagens iginorando letras maiusculas e minuculas do titulo
 	//SELECT *FROM tb_postagens WHERE titulo LIKE "%titulo%";
 }
  

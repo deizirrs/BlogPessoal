@@ -38,7 +38,9 @@ private String texto;
 private LocalDateTime data;
 
 //metodos Get e Set, com atributos.
+//relacionamentos
 
+private Tema tema;
 public Long getId() {
 	return id;
 }
@@ -63,6 +65,12 @@ public LocalDateTime getData() {
 public void setData(LocalDateTime data) {
 	this.data = data;
 }
-
+//criar metodos get e set do objeto tema
+public Tema getTema() {
+	return tema;
+}
+public void setTema(Tema tema) {
+	this.tema = tema;
+}
 
 }

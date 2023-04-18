@@ -25,24 +25,35 @@ import jakarta.validation.Valid;
 
 	//Representacional State Transfer
 @RestController // classe controladora é queela vai responder a toda requisição que virá pra cá
+
+
 @RequestMapping ("/postagens")
+//para habilitar requisiçoes de outras origens, se nao habilitar ele da negado as requisiçoes/allowedHeaders- liberar o caçalhor da requisiçao, para chegar o token
+// a aplicaçao http me retorna no cabeçalho o token
 @CrossOrigin (origins = "*", allowedHeaders = "*")
 public class PostagemController{
-	
-	@Autowired
+	//injeçao de dependencia
+	@Autowired//caraterizar a injeçao de dependencia
 	private PostagemRepository PostagemRepository;
-
+//traz todo os met para manipular o bd
+	
+	//met construtor
 	@GetMapping
 	public ResponseEntity<List<Postagem>> getAll(){
 		return ResponseEntity.ok(PostagemRepository.findAll());
+		
+	//ok -resp padrao / findAll -tras todas a postagens
 	}
 	//PathVariable pega o id do get e passa para o parametro do metodo Long id
-	@GetMapping("/{id}")
+	@GetMapping("/{id}")// variavel dentro de chaves {}
+	//getById - o objeto nao pode ser nulo/ @PathVariable apenas uma postagem
 	public ResponseEntity<Postagem> getById(@PathVariable Long id){
-		
+		//retorna o resultado do findById
 		return PostagemRepository.findById(id)
 //dentro da variavel resposta joga o resultado
 			.map(resposta ->ResponseEntity.ok(resposta))
+			
+			//if-orElse
 			.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 				//SELECT * FROM tb_postagens WHEREN id =?;
 		
@@ -56,7 +67,9 @@ public class PostagemController{
 	//insert
 	@PostMapping
 	public ResponseEntity<Postagem> post(@Valid @RequestBody Postagem postagem){
-	 return ResponseEntity.status(HttpStatus.CREATED).body(PostagemRepository.save(postagem));
+	 return ResponseEntity.status(HttpStatus.CREATED)
+			 //confirmaçao da requisiçao
+			 .body(PostagemRepository.save(postagem));
 	 /*INSERT INTO tb_postagens (data, titulo, texto)
 	  VALUES (?, ?,)
 	  */
@@ -67,6 +80,7 @@ public class PostagemController{
 	 return ResponseEntity.status(HttpStatus.OK).body(PostagemRepository.save(postagem));
 	}
 	
+	// respo padrao do metodo NO_CONTENT
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping ("/{id}")
 	public void delete(@PathVariable long id) {
