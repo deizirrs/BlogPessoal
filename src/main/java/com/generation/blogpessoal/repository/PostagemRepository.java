@@ -11,7 +11,7 @@ public interface PostagemRepository extends JpaRepository<Postagem, Long>{
 	
 	//Metodo de consulta
 	
-//associa a model com a interface /  metodo de consulta /@Param mapear o parametro
+//associa a model com a interface /@Param mapear o parametro
 	List<Postagem> findAllByTituloContainingIgnoreCase(@Param("titulo") String titulo);
 	//vai listar todas a postagens iginorando letras maiusculas e minuculas do titulo
 	//SELECT *FROM tb_postagens WHERE titulo LIKE "%titulo%";
